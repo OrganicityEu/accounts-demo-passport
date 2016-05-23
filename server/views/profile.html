@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <h1>{{ title }}</h1>
+  <ul>
+    <li>Username: {{user.name}}</li>
+    <li>Email: {{user.email}}</li>
+    <li>Roles: {{user.roles}}</li>
+  </ul>
+
+{% endblock %}

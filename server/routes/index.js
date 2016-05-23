@@ -1,44 +1,49 @@
 var express = require('express');
 var router = express.Router();
 
-var passportLinkedIn = require('../auth/linkedin');
-var passportGithub = require('../auth/github');
-var passportTwitter = require('../auth/twitter');
+var passportOauth2 = require('../auth/oauth2');
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', {
+    user: req.user
+  });
 });
 
-router.get('/login', function(req, res, next) {
-  res.send('Go back and register!');
+
+router.get('/profile', function(req, res, next) {
+  console.log();
+  if(!req.user) {
+    res.render('error', {
+      message: '401 Unauthorized',
+      error : {
+        status: 'You\'re not logged in!'
+      }
+    });
+  } else {
+    res.render('profile', {
+      title: 'Profile',
+      user: req.user
+    });
+  }
 });
 
-router.get('/auth/linkedin', passportLinkedIn.authenticate('linkedin'));
+router.get('/auth/oauth2', passportOauth2.authenticate('oauth2'));
 
-router.get('/auth/linkedin/callback',
-  passportLinkedIn.authenticate('linkedin', { failureRedirect: '/login' }),
+router.get('/auth/oauth2/callback',
+  passportOauth2.authenticate('oauth2', {
+    failureRedirect: '/error',
+    successRedirect: '/profile'
+  }),
   function(req, res) {
     // Successful authentication
     res.json(req.user);
-  });
+  }
+);
 
-router.get('/auth/github', passportGithub.authenticate('github', { scope: [ 'user:email' ] }));
-
-router.get('/auth/github/callback',
-  passportGithub.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication
-    res.json(req.user);
-  });
-
-router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
-
-router.get('/auth/twitter/callback',
-  passportTwitter.authenticate('twitter', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication
-    res.json(req.user);
-  });
-
+router.get('/auth/logout', function(req, res, next) {
+  req.logout();
+  req.user = null;
+  res.redirect('/');
+});
 module.exports = router;

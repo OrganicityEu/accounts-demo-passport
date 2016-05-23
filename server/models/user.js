@@ -4,8 +4,11 @@ var Schema = mongoose.Schema;
 
 // create User Schema
 var User = new Schema({
+  id: String,
   name: String,
-  someID: String
+  email : String,
+  token : String,
+  roles : [String]
 });
 
 
