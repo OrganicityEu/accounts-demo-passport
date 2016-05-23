@@ -5,7 +5,8 @@ var User = require('../models/user');
 var config = require('../config');
 var init = require('./init');
 
-var jwtDecode = require('jwt-decode');
+var fs = require('fs');
+var jwt = require('jsonwebtoken');
 
 passport.use(new OAuth2Strategy({
       authorizationURL: config.oAuth2.authorizationURL,
@@ -17,32 +18,40 @@ passport.use(new OAuth2Strategy({
   },
   function(req, token, refreshToken, profile, done) {
 
-    var profile = jwtDecode(token);
-    console.log('profile', profile);
+    try {
+      var cert = fs.readFileSync('cert.pem');
+      var profile = jwt.verify(token, cert);
 
-    var searchQuery = {
-      id: profile.sub
-    };
+      console.log('profile:', profile);
 
-    var updates = {
-      token: token,
-      name: profile.name,
-      email: profile.email,
-      roles: (profile.resource_access.demo) ? profile.resource_access.demo.roles : []
-    };
+      var searchQuery = {
+        id: profile.sub
+      };
 
-    var options = {
-      upsert: true
-    };
+      var updates = {
+        token: token,
+        name: profile.name,
+        email: profile.email,
+        roles: (profile.resource_access.demo) ? profile.resource_access.demo.roles : []
+      };
 
-    // update the user if she/he exists or add a new user
-    User.findOneAndUpdate(searchQuery, updates, options, function(err, user) {
-      if(err) {
-        return done(err);
-      } else {
-        return done(null, user);
-      }
-    });
+      var options = {
+        upsert: true
+      };
+
+      // update the user if she/he exists or add a new user
+      User.findOneAndUpdate(searchQuery, updates, options, function(err, user) {
+        if(err) {
+          return done(err);
+        } else {
+          return done(null, user);
+        }
+      });
+
+
+    } catch(err) {
+      return done(err);
+    }
 
   }
 
