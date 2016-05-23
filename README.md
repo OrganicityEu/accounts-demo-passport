@@ -6,11 +6,11 @@ This code is forked from:
 
 * https://github.com/mjhea0/passport-social-auth
 
-The modified code
+The modified example
 
 * uses the [passport-oauth2](https://github.com/jaredhanson/passport-oauth2) extension
 * uses the *Implicit Flow*
-* Decodes and verifies [JWT tokens](https://jwt.io/) with [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+* decodes and verifies [JWT tokens](https://jwt.io/) with [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 
 ## Getting started
 
