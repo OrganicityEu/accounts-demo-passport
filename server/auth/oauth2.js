@@ -1,61 +1,36 @@
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2').Strategy;
+var OAuth2RefreshTokenStrategy = require('passport-oauth2-middleware').Strategy;
 
-var User = require('../models/user');
 var config = require('../config');
 var init = require('./init');
 
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 
-passport.use(new OAuth2Strategy({
-      authorizationURL: config.oAuth2.authorizationURL,
-      tokenURL: config.oAuth2.tokenURL,
-      clientID: config.oAuth2.clientID,
-      clientSecret: config.oAuth2.clientSecret,
-      callbackURL: config.oAuth2.callbackURL,
-      passReqToCallback: true
+var refreshStrategy = new OAuth2RefreshTokenStrategy({
+  refreshWindow: 10, // Time in seconds to perform a token refresh before it expires
+  userProperty: 'token', // Active user property name to store OAuth tokens
+  authenticationURL: '/auth/oauth2', // URL to redirect unathorized users to
+  cert: "cert.pem"
+});
+
+passport.use('main', refreshStrategy);
+
+var strategy = new OAuth2Strategy(
+  {
+    authorizationURL: config.oAuth2.authorizationURL,
+    tokenURL: config.oAuth2.tokenURL,
+    clientID: config.oAuth2.clientID,
+    clientSecret: config.oAuth2.clientSecret,
+    callbackURL: config.oAuth2.callbackURL,
+    passReqToCallback: false
   },
-  function(req, token, refreshToken, profile, done) {
+  refreshStrategy.getOAuth2StrategyCallback()
+);
 
-    try {
-      var cert = fs.readFileSync('cert.pem');
-      var profile = jwt.verify(token, cert);
-
-      console.log('profile:', profile);
-
-      var searchQuery = {
-        id: profile.sub
-      };
-
-      var updates = {
-        token: token,
-        name: profile.name,
-        email: profile.email,
-        roles: (profile.resource_access.demo) ? profile.resource_access.demo.roles : []
-      };
-
-      var options = {
-        upsert: true
-      };
-
-      // update the user if she/he exists or add a new user
-      User.findOneAndUpdate(searchQuery, updates, options, function(err, user) {
-        if(err) {
-          return done(err);
-        } else {
-          return done(null, user);
-        }
-      });
-
-
-    } catch(err) {
-      return done(err);
-    }
-
-  }
-
-));
+passport.use('oauth', strategy);
+refreshStrategy.useOAuth2Strategy(strategy);
 
 // serialize user into the session
 init();

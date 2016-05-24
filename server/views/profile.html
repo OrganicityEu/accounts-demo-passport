@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
   <h3>{{ title }}</h3>
   <ul>
-    <li>Username: {{user.name}}</li>
-    <li>Email: {{user.email}}</li>
-    <li>Roles: {{user.roles}}</li>
+    <li>Username: {{user.jwt.preferred_username}}</li>
+    <li>User ID:: {{user.jwt.sub}}</li>
+    <li>Email: {{user.jwt.email}}</li>
+    <li>Roles: {{roles}}</li>
   </ul>
 
 {% endblock %}

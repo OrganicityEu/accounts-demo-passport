@@ -8,9 +8,8 @@ This code is forked from:
 
 The modified example
 
-* uses the [passport-oauth2](https://github.com/jaredhanson/passport-oauth2) extension
-* uses the *Implicit Flow*
-* decodes and verifies [JWT tokens](https://jwt.io/) with [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+* uses the [boldt/passport-oauth2](https://github.com/boldt/passport-oauth2) extension, which decodes and verifies [JWT tokens](https://jwt.io/) with [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+* uses the *Authorization Code Flow*
 * is based on [Django templates](https://djangoproject.com)
 
 ## Getting started
