@@ -11,10 +11,16 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/profile', passport.authenticate('main'), function(req, res) {
+  // demo is the name of the component we check for roles; it is only
+  // set, if the user actually has any roles.
+  var roles = req.user.jwt.resource_access.demo
+    ? req.user.jwt.resource_access.demo.roles.join(', ')
+    : '';
+
   res.render('profile', {
     title: 'Profile',
     user: req.user,
-    roles : req.user.jwt.resource_access.demo.roles.join(', ')
+    roles : roles
   });
 });
 
