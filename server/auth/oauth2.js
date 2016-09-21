@@ -24,7 +24,8 @@ var strategy = new OAuth2Strategy(
     clientID: config.oAuth2.clientID,
     clientSecret: config.oAuth2.clientSecret,
     callbackURL: config.oAuth2.callbackURL,
-    passReqToCallback: false
+    passReqToCallback: false,
+    scope: 'offline_access' // Offline token
   },
   refreshStrategy.getOAuth2StrategyCallback()
 );
