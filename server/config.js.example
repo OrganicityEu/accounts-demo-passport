@@ -1,4 +1,4 @@
-var ids = {
+var config = {
   oAuth2: {
     authorizationURL : 'https://accounts.organicity.eu/realms/organicity/protocol/openid-connect/auth',
     tokenURL : 'https://accounts.organicity.eu/realms/organicity/protocol/openid-connect/token',
@@ -8,4 +8,11 @@ var ids = {
   }
 };
 
-module.exports = ids;
+config.accounts_token_endpoint = {
+	protocol: 'https',
+	host: 'accounts.organicity.eu',
+	port: '443',
+	path: '/realms/organicity/protocol/openid-connect/token',
+};
+
+module.exports = config;
