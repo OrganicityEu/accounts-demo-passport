@@ -5,15 +5,17 @@
     <title>OrganiCity Accounts - Passport.js Demo</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="container">
       <h1>OrganiCity</h1>
-      <h2>Passport.js Demo</h2>
+      <h2>Annotation Service Demo</h2>
       <hr>
       <a href="/" class="btn btn-default">Home</a>
       {% if user %}
-        <a href="/profile" class="btn btn-default">Profile</a>
+        <a href="/demo" class="btn btn-default">Demo</a>
         <a href="/auth/logout" class="btn btn-default">Logout</a>
       {% else %}
         <a href="/auth/oauth2" class="btn btn-default">Login</a>
