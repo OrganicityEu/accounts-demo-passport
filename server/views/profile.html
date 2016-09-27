@@ -2,25 +2,21 @@
 
 {% block content %}
   <h3>{{ title }}</h3>
-Annotation:<br><textarea id="annotation" style="width:600px;height:300px;font-family:monospace"></textarea>
-  <!--
-  <ul>
-    <li>Username: {{user.jwt.preferred_username}}</li>
-    <li>User ID:: {{user.jwt.sub}}</li>
-    <li>Email: {{user.jwt.email}}</li>
-    <li>Roles: {{roles}}</li>
-  -->
-<button id="send">Send Annotation</button>
+  Annotation:<br>
+  <textarea id="annotation" style="width:600px;height:300px;font-family:monospace"></textarea>
+  <br>
+  <button id="send">Send Annotation</button>
 
   <h4>Logging</h4>
+  <button id="refresh">Refresh the token</button>
 
   <p>
     Access token: <br>
-    <textarea id="accessToken" style="width:600px;height:150px;font-family:monospace" disabled>{{user.accessToken}}</textarea></li>
+    <textarea id="accessToken" style="width:600px;height:150px;font-family:monospace" disabled>{{user.accessToken}}</textarea>
   </p>
   <p>
     Offline token:<br>
-    <textarea id="refreshToken" style="width:600px;height:150px;font-family:monospace" disabled>{{user.refreshToken}}</textarea></li>
+    <textarea id="refreshToken" style="width:600px;height:150px;font-family:monospace" disabled>{{user.refreshToken}}</textarea>
   </p>
 
 
