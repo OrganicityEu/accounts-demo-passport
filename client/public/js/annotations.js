@@ -13,7 +13,7 @@ $(document).ready(function() {
       if (this.readyState == 4 && this.status == 200) {
         var responseJSON = JSON.parse(this.responseText);
         $('#accessToken').val(responseJSON.access_token);
-        $('#refreshToken').val(responseJSON.refresh_token);
+        //$('#refreshToken').val(responseJSON.refresh_token);
         if(callback) callback();
       }
     };
