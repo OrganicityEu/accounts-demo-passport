@@ -18,7 +18,7 @@ router.get('/profile', passport.authenticate('main'), function(req, res) {
     : '';
 
   res.render('profile', {
-    title: 'Profile',
+    title: 'Create an Asset',
     user: req.user,
     roles : roles
   });
