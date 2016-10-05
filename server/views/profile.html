@@ -4,19 +4,21 @@
   <h3>{{ title }}</h3>
   <ul>
     <li>Username: {{user.jwt.preferred_username}}</li>
-    <li>User ID:: {{user.jwt.sub}}</li>
-    <li>Email: {{user.jwt.email}}</li>
+    <li>User ID: <span style="font-family:monospace">{{user.jwt.sub}}</span></li>
 	<!--
+    <li>Email: {{user.jwt.email}}</li>
     <li>Roles: {{roles}}</li>
 	-->
     <li>
 		Access token: <input id="accessToken" style="width:600px;font-family:monospace" value="{{user.accessToken}}"  target="_blank"> 
-		<a href="http://jwt.io/#id_token={{user.accessToken}}">jwt.io</a>
+		<a href="http://jwt.io/#id_token={{user.accessToken}}" target="_blank">jwt.io</a>
 	</li>
+<!--
     <li>
 		Refresh token: <input id="refreshToken" style="width:600px;font-family:monospace" value="{{user.refreshToken}}" target="_blank">
 		<a href="http://jwt.io/#id_token={{user.refreshToken}}">jwt.io</a>
 	</li>
+-->
   </ul>
 
 {% endblock %}
