@@ -19,6 +19,7 @@ The modified example
 ```
 git clone git@github.com:OrganicityEu/accounts-demo-passport.git
 cd accounts-demo-passport
+cp server/config.js.example server/config.js # add client_id and client_credential
 npm install
 npm start
 ```
